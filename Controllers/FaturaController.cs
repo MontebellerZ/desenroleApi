@@ -6,9 +6,8 @@ namespace desenroleApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class FaturaController(ILogger<FaturaController> logger, IFaturaService service) : ControllerBase
+public class FaturaController(IFaturaService service) : ControllerBase
 {
-    private readonly ILogger<FaturaController> _logger = logger;
     private readonly IFaturaService _service = service;
 
     [HttpGet]

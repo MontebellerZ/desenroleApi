@@ -1,22 +1,27 @@
+using desenroleApi.Domain.Models;
+using desenroleApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace desenroleApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsuarioController : ControllerBase
+public class UsuarioController(IUsuarioService service) : ControllerBase
 {
+    private readonly IUsuarioService _service = service;
+
     [HttpGet()]
-    public ActionResult<List<int>> GetTeste()
+    [Route("{id}")]
+    public ActionResult<Usuario> GetById(Guid id)
     {
-        List<int> vetor = [1, 2, 3, 4, 5];
-        return Ok(vetor);
+        var usuario = _service.GetById(id);
+        return Ok(usuario);
     }
 
     [HttpPost()]
-    public ActionResult<List<string>> PostTeste([FromBody] string batata, string cenoura)
+    public ActionResult<List<string>> Create([FromBody] Usuario usuarioDto)
     {
-        List<string> vetor = [batata, cenoura];
-        return Ok(vetor);
+        var usuario = _service.Create(usuarioDto);
+        return Ok(usuario);
     }
 }
