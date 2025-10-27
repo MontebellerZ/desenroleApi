@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using desenroleApi.Domain.Models;
 using desenroleApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -12,16 +13,16 @@ public class UsuarioController(IUsuarioService service) : ControllerBase
 
     [HttpGet()]
     [Route("{id}")]
-    public ActionResult<Usuario> GetById(Guid id)
+    public async Task<ActionResult<Usuario>> GetById(Guid id)
     {
-        var usuario = _service.GetById(id);
+        var usuario = await _service.GetById(id);
         return Ok(usuario);
     }
 
     [HttpPost()]
-    public ActionResult<List<string>> Create([FromBody] Usuario usuarioDto)
+    public async Task<ActionResult<List<string>>> Create([FromBody] Usuario usuarioDto)
     {
-        var usuario = _service.Create(usuarioDto);
+        var usuario = await _service.Create(usuarioDto);
         return Ok(usuario);
     }
 }

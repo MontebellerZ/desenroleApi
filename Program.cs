@@ -19,7 +19,12 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapScalarApiReference();
+    app.MapScalarApiReference("/docs", options =>
+    {
+        options.Theme = ScalarTheme.DeepSpace;
+        options.WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Axios);
+        options.AddPreferredSecuritySchemes("Bearer");
+    });
     app.MapOpenApi();
 }
 
