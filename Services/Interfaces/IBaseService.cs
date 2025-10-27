@@ -2,9 +2,11 @@ namespace desenroleApi.Services.Interfaces;
 
 public interface IBaseService<T> where T : class
 {
-    Task<T?> GetByIdAsync(int id);
-    Task<IEnumerable<T>> GetAllAsync();
-    Task<T> CreateAsync(T entity);
-    Task UpdateAsync(T entity);
-    Task DeleteAsync(int id);
+    Task<T?> GetById(int id);
+    Task<T?> GetById(Guid id);
+    Task<IEnumerable<T>> GetAll();
+    Task<T> Create(T entity);
+    Task Update(T entity);
+    Task Delete(int id);
+    Task Delete(Guid id);
 }
