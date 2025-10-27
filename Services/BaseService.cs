@@ -8,12 +8,7 @@ public class BaseService<T>(IBaseRepository<T> repository) : IBaseService<T> whe
 {
     protected readonly IBaseRepository<T> _repository = repository;
 
-    public virtual async Task<T?> GetById(int id)
-    {
-        return await _repository.GetById(id);
-    }
-
-    public virtual async Task<T?> GetById(Guid id)
+    public virtual async Task<T?> GetById<TId>(TId id) where TId : notnull
     {
         return await _repository.GetById(id);
     }
@@ -36,14 +31,7 @@ public class BaseService<T>(IBaseRepository<T> repository) : IBaseService<T> whe
         await _repository.SaveChangesAsync();
     }
 
-    public virtual async Task Delete(int id)
-    {
-        var entity = await _repository.GetById(id) ?? throw new NotFoundException($"Objeto não encontrado com o id {id}");
-        await _repository.Delete(entity);
-        await _repository.SaveChangesAsync();
-    }
-
-    public virtual async Task Delete(Guid id)
+    public virtual async Task Delete<TId>(TId id) where TId : notnull
     {
         var entity = await _repository.GetById(id) ?? throw new NotFoundException($"Objeto não encontrado com o id {id}");
         await _repository.Delete(entity);

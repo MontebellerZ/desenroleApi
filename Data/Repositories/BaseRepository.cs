@@ -9,14 +9,10 @@ public class BaseRepository<T>(Context context) : IBaseRepository<T> where T : c
     protected readonly Context _context = context;
     protected readonly DbSet<T> _dbSet = context.Set<T>();
 
-    public virtual async Task<T?> GetById(int id)
+    public virtual async Task<T?> GetById<TId>(TId id) where TId : notnull
     {
-        return await _dbSet.FindAsync(id);
-    }
-
-    public virtual async Task<T?> GetById(Guid id)
-    {
-        return await _dbSet.FindAsync(id);
+        var entity = await _dbSet.FindAsync(id);
+        return entity;
     }
 
     public virtual async Task<List<T>> GetAll()
@@ -47,14 +43,10 @@ public class BaseRepository<T>(Context context) : IBaseRepository<T> where T : c
         await Task.CompletedTask;
     }
 
-    public virtual async Task<bool> Exists(int id)
+    public virtual async Task<bool> Exists<TId>(TId id) where TId : notnull
     {
-        return await _dbSet.FindAsync(id) != null;
-    }
-
-    public virtual async Task<bool> Exists(Guid id)
-    {
-        return await _dbSet.FindAsync(id) != null;
+        var entity = await _dbSet.FindAsync(id);
+        return entity != null;
     }
 
     public async Task SaveChangesAsync()
